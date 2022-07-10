@@ -3,9 +3,9 @@
 // projects, please see my GitHub portfolio at https://github.com/JayMassey98.
 // ---------------------------------------------------------------------------
 
-// -------------------------------------------------------------------------
-// PURPOSE: Output a board layout of a solution to the eight queens problem.
-// -------------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// PURPOSE: Use backtracking to determine a solution for an n-queens problem.
+// --------------------------------------------------------------------------
 
 #pragma once
 

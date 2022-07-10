@@ -10,10 +10,10 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Specify that the project is C++, not C.
-project ("eight-queens-algorithm")
+project ("n-queens-algorithm")
 
 # Add source to this project's executable.
-add_executable (eight-queens-algorithm "eight-queens-algorithm.cpp" "eight-queens-algorithm.h")
+add_executable (n-queens-algorithm "n-queens-algorithm.cpp" "n-queens-algorithm.h")
 
 if (MSVC)
     # Warning level 4 and all warnings as errors.

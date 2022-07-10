@@ -8,25 +8,25 @@
 #include <iostream>
 #include <string>
 
-#include "eight-queens-algorithm.h"
+#include "n-queens-algorithm.h"
 
 
-const uint8_t set_board_size = 8;
-uint8_t board[set_board_size][set_board_size] = { 0 };
+const uint8_t max_board_size = 24;
+uint8_t board[max_board_size][max_board_size] = { 0 };
 
 
 // output a human readable board of the selected size
 void print_board_layout(uint8_t board_size)
 {
-   for (int i = 0; i < board_size; i++)
-   {
-       for (int j = 0; j < board_size; j++)
-       {
-           std::cout << board[i][j] << " ";
-       }
-       
-       std::cout << std::endl;
-   }
+    for (int i = 0; i < board_size; i++)
+    {
+        for (int j = 0; j < board_size; j++)
+        {
+            std::cout << board[i][j] << " ";
+        }
+
+        std::cout << std::endl;
+    }
 }
 
 
@@ -34,7 +34,7 @@ void print_board_layout(uint8_t board_size)
 bool is_position_valid(uint8_t board_size, int row, int column)
 {
     bool position_validity = true;
-    
+
     for (int i = 0; i < column; i++)
     {
         // check if there is a queen to the left
@@ -74,7 +74,7 @@ bool is_position_valid(uint8_t board_size, int row, int column)
 bool place_n_queen(uint8_t board_size, int column)
 {
     bool solution_found = false;
-    
+
     // check if all queens have been successfully placed
     if (column >= board_size)
     {
@@ -114,7 +114,7 @@ bool place_n_queen(uint8_t board_size, int column)
 bool search_for_queens(uint8_t board_size)
 {
     bool board_solution_found = false;
-    
+
     // set all elements in the board array to 0
     for (int i = 0; i < board_size; i++)
     {
@@ -144,5 +144,33 @@ bool search_for_queens(uint8_t board_size)
 // entry point of program
 int main()
 {
-    search_for_queens(set_board_size);
+    std::cout << "N Queens Solution Finder\n\nInput a board size between 1 & " + std::to_string(max_board_size) + "."
+        + "\nA solution will then be outputted.\nInput '0' below once you are done.\n";
+    
+    bool main_loop = true;
+    int input_value = 0;
+
+    while (main_loop == true)
+    {        
+        std::cout << "\nPlease enter your desired board size: ";
+        std::cin >> input_value;
+
+        // determine if the program should be stopped
+        if (input_value == 0)
+        {
+            main_loop = false;
+            break;
+        }
+
+        // determine if an invalid number was inputted
+        if (input_value < 1 || input_value > max_board_size)
+        {
+            std::cout << "ERROR: Board size invalid!\n\n";
+
+            // jump back to the start of the main loop
+            continue;
+        }
+
+        search_for_queens(input_value);
+    }
 }
