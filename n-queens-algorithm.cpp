@@ -3,6 +3,7 @@
 // projects, please see my GitHub portfolio at https://github.com/JayMassey98.
 // ---------------------------------------------------------------------------
 
+#include <chrono>
 #include <cstdbool>
 #include <cstdint>
 #include <iostream>
@@ -18,11 +19,11 @@ uint8_t board[max_board_size][max_board_size] = { 0 };
 // output a human readable board of the selected size
 void print_board_layout(uint8_t board_size)
 {
-    for (int i = 0; i < board_size; i++)
+    for (uint8_t row = 0; row < board_size; row++)
     {
-        for (int j = 0; j < board_size; j++)
+        for (uint8_t column = 0; column < board_size; column++)
         {
-            std::cout << board[i][j] << " ";
+            std::cout << board[row][column] << " ";
         }
 
         std::cout << std::endl;
@@ -85,13 +86,13 @@ bool place_n_queen(uint8_t board_size, int column)
     if (solution_found == false)
     {
         // for each row, check placing of queen is possible or not
-        for (int i = 0; i < board_size; i++)
+        for (int row = 0; row < board_size; row++)
         {
             // if the position is valid, place a queen there
-            if (is_position_valid(board_size, i, column))
+            if (is_position_valid(board_size, row, column))
             {
                 // add a queen to the current position
-                board[i][column] = 'Q';
+                board[row][column] = 'Q';
 
                 // check the following column
                 if (place_n_queen(board_size, column + 1))
@@ -101,7 +102,7 @@ bool place_n_queen(uint8_t board_size, int column)
                 }
 
                 // backtrack and remove the current queen
-                board[i][column] = '-';
+                board[row][column] = '-';
             }
         }
     }
@@ -113,14 +114,15 @@ bool place_n_queen(uint8_t board_size, int column)
 // see if a solution for the selected board size exists
 bool search_for_queens(uint8_t board_size)
 {
+    auto start = std::chrono::steady_clock::now();
     bool board_solution_found = false;
 
     // set all elements in the board array to 0
-    for (int i = 0; i < board_size; i++)
+    for (uint8_t row = 0; row < board_size; row++)
     {
-        for (int j = 0; j < board_size; j++)
+        for (uint8_t column = 0; column < board_size; column++)
         {
-            board[i][j] = '-';
+            board[row][column] = '-';
         }
     }
 
@@ -136,6 +138,14 @@ bool search_for_queens(uint8_t board_size)
 
         board_solution_found = true;
     }
+
+    // calculate the time taken to find this solution
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = (end - start) / 1000;
+
+    // output the time taken to find this solution
+    std::cout << std::fixed << "\nThis solution was found in ~"
+        << duration.count() << " ms." << std::endl;
 
     return board_solution_found;
 }
@@ -170,6 +180,8 @@ int main()
             // jump back to the start of the main loop
             continue;
         }
+
+        std::cout << std::endl;
 
         search_for_queens(input_value);
     }
